@@ -13,7 +13,6 @@ def run_test_group(testable) {
       unstash 'fresh'
       sh curtest['build_command']
       stash name: curtest['test_name']
-      step([$class: 'WsCleanup'])
     } catch (e) {
       built = false
       for (int i = 0; i < test_cases.size(); i++) {
@@ -44,6 +43,8 @@ def run_individual_test_case(test_group, test_case) {
   cur_result['test_name'] = command
   cur_result['max_score'] = test_case['points']
   try {
+    step([$class: 'WsCleanup'])
+    unstash name: test_group
     def output_name = "${test_group}_${command}_output"
     output_name = output_name.replaceAll("[\\W]+", "-")
     sh "${command} > ${output_name}"
@@ -92,19 +93,19 @@ node {
 
   /* Generate the build stages to run the tests */
   stage('Generate Testing Stages') {
-    def branches = [:]
+    // def branches = [:]
     /* for each test group */
     def testables = assignment['testables']
     for (int index = 0; index < testables.size(); index++) {
       def i = index
       def curtest = testables[index]
       /* create a parallel group */
-      branches[curtest['test_name']] = {
+      stage(curtest['test_name']) {
         run_test_group(curtest)
       }
     }
 
-    parallel branches
+    // parallel branches
   }
 
   stage('Report Results') {
