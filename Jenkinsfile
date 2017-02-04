@@ -24,7 +24,7 @@ def run_test_group(testable) {
         cur_result['score'] = 0 // fail
         cur_result['max_score'] = test_case['points']
         def jstr = jsonString(cur_result)
-        sh "echo '${jstr}' >> .anacapa.tmp_results_${testable['test_name']}"
+        sh "echo '${jstr}' >> .anacapa.tmp_results_${slugify(testable['test_name'])}"
       }
     }
 
@@ -35,7 +35,7 @@ def run_test_group(testable) {
       }
     }
 
-    stash includes: ".anacapa.tmp_results_${testable['test_name']}", name: "${testable['test_name']}_results"
+    stash includes: ".anacapa.tmp_results_${slugify(testable['test_name'])}", name: "${slugify(testable['test_name'])}_results"
   }
 }
 
@@ -49,7 +49,7 @@ def run_individual_test_case(test_group, test_case) {
     step([$class: 'WsCleanup'])
     unstash name: test_group
     def output_name = "${test_group}_${command}_output"
-    output_name = output_name.replaceAll("[\\W]+", "-")
+    output_name = slugify(output_name)
     sh "${command} > ${output_name}"
 
     if (!test_case['expected'].equalsIgnoreCase('generate')) {
@@ -70,7 +70,7 @@ def run_individual_test_case(test_group, test_case) {
     cur_result['score'] = 0 // fail
   } finally {
     def jstr = jsonString(cur_result)
-    sh "echo '${jstr}' >> .anacapa.tmp_results_${testable['test_name']}"
+    sh "echo '${jstr}' >> .anacapa.tmp_results_${slugify(testable['test_name'])}"
   }
 }
 
@@ -121,7 +121,7 @@ node {
     }
     println(test_results)
     def name = "${env.JOB_NAME}_test_results"
-    name = name.replaceAll("[\\W]+", "-")
+    name = slugify(name)
     def jstr = jsonString(test_results, pretty=true)
     sh "echo '${jstr}' > ${name}.json"
     sh 'ls -al'
