@@ -1,0 +1,25 @@
+{
+  "assignment_name": "lab00",
+  "maximum_group_size": 1,
+  "ready": true,
+  "deadline": "2017-02-14 23:59:00-08:00",
+  "expected_files": [
+    "hello.cpp"
+  ],
+  "uneditables": [
+    "Jenkinsfile"
+  ],
+  "testables": [{
+      "test_name": "Hello World",
+      "build_command": "g++ -o hello hello.cpp",
+      "test_cases": [{
+          "command": "./hello",
+          "points": 100,
+          "kind": "diff",
+          "hide_expected": true,
+          "diff_source": "stdout",
+          "expected": "resources/expected_outputs/hello.txt",
+          "timeout": 4
+      }]
+  }]
+}
