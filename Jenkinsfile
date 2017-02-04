@@ -103,6 +103,8 @@ node {
         run_test_group(curtest)
       }
     }
+
+    parallel branches
   }
 
   stage('Report Results') {
