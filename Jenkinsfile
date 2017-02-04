@@ -73,6 +73,7 @@ def run_individual_test_case(test_group, test_case) {
 node {
   /* Checkout from Source */
   stage ('Checkout') {
+    sh 'ls -al'
     checkout scm
     stash name: 'fresh'
   }
@@ -106,10 +107,11 @@ node {
 
   stage('Report Results') {
     println(test_results)
-    def name = "${env.JOB_NAME}_test_results.json"
+    def name = "${env.JOB_NAME}_test_results"
     name = name.replaceAll("[\\W]+", "-")
-    writeJSON(test_results, name)
-    archiveArtifacts artifacts: name, fingerprint: true
+    writeJSON(test_results, "${name}.json")
+    sh 'ls -al'
+    archiveArtifacts artifacts: "${name}.json", fingerprint: true
   }
 
 }
