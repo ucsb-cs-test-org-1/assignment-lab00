@@ -109,7 +109,7 @@ node {
     println(test_results)
     def name = "${env.JOB_NAME}_test_results"
     name = name.replaceAll("[\\W]+", "-")
-    writeJSON(test_results, "${name}.json")
+    writeJSON(test_results, "./${name}.json")
     sh 'ls -al'
     // archiveArtifacts artifacts: "${name}.json", fingerprint: true
   }
