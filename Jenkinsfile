@@ -16,6 +16,8 @@ def run_test_group(testable) {
       sh "rm .anacapa.tmp_results_${slugify(testable['test_name'])}"
     } catch (e) {
       built = false
+      println("Build Failed...")
+      println(e)
       for (int i = 0; i < test_cases.size(); i++) {
         def index = i
         def test_case = test_cases[index]
@@ -30,6 +32,7 @@ def run_test_group(testable) {
     }
 
     if (built) {
+      println("Successfully built!")
       for (int i = 0; i < test_cases.size(); i++) {
         def index = i
         run_individual_test_case(testable['test_name'], test_cases[index])
