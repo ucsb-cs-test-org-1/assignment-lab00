@@ -23,7 +23,8 @@ def run_test_group(testable) {
         cur_result['test_name'] = test_case['command']
         cur_result['score'] = 0 // fail
         cur_result['max_score'] = test_case['points']
-        test_results << cur_result
+        def jstr = jsonString(cur_result)
+        sh "echo '${jstr}' >> .anacapa.tmp_results"
       }
     }
 
@@ -33,6 +34,8 @@ def run_test_group(testable) {
         run_individual_test_case(testable['test_name'], test_cases[index])
       }
     }
+
+    stash includes: '.anacapa.tmp_results', name: "${testable['test_name']}_results"
   }
 }
 
@@ -66,7 +69,8 @@ def run_individual_test_case(test_group, test_case) {
   } catch (e) {
     cur_result['score'] = 0 // fail
   } finally {
-    test_results << cur_result
+    def jstr = jsonString(cur_result)
+    sh "echo '${jstr}' >> .anacapa.tmp_results"
   }
 }
 
@@ -112,7 +116,7 @@ node {
     println(test_results)
     def name = "${env.JOB_NAME}_test_results"
     name = name.replaceAll("[\\W]+", "-")
-    def jstr = jsonString(test_results)
+    def jstr = jsonString(test_results, pretty=true)
     sh "echo '${jstr}' > ${name}.json"
     sh 'ls -al'
     archiveArtifacts artifacts: "${name}.json", fingerprint: true
