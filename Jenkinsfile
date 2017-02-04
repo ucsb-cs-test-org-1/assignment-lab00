@@ -13,6 +13,9 @@ def run_test_group(testable) {
       unstash 'fresh'
       sh testable['build_command']
       stash name: testable['test_name']
+      if (fileExists(".anacapa.tmp_results_${slugify(testable['test_name'])}")) {
+        sh ".anacapa.tmp_results_${slugify(testable['test_name'])}"
+      }
       def rm = sh returnStatus: true, script: "rm .anacapa.tmp_results_${slugify(testable['test_name'])}"
     } catch (e) {
       built = false
