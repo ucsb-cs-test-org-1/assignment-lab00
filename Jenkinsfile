@@ -13,7 +13,7 @@ def run_test_group(testable) {
       unstash 'fresh'
       sh testable['build_command']
       stash name: testable['test_name']
-      sh "rm .anacapa.tmp_results_${slugify(testable['test_name'])}"
+      sh "echo '' > .anacapa.tmp_results_${slugify(testable['test_name'])}"
     } catch (e) {
       built = false
       println("Build Failed...")
