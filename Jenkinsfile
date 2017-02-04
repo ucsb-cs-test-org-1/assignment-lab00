@@ -11,8 +11,8 @@ def run_test_group(testable) {
     try {
       step([$class: 'WsCleanup'])
       unstash 'fresh'
-      sh curtest['build_command']
-      stash name: curtest['test_name']
+      sh testable['build_command']
+      stash name: testable['test_name']
       sh "rm .anacapa.tmp_results_${slugify(testable['test_name'])}"
     } catch (e) {
       built = false
