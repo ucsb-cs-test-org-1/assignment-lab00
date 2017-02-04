@@ -111,7 +111,7 @@ node {
     name = name.replaceAll("[\\W]+", "-")
     writeJSON(test_results, "${name}.json")
     sh 'ls -al'
-    archiveArtifacts artifacts: "${name}.json", fingerprint: true
+    // archiveArtifacts artifacts: "${name}.json", fingerprint: true
   }
 
 }
