@@ -4,7 +4,7 @@ def assignment = null
 def test_results = [:]
 
 def run_test_group(testable) {
-  node {
+  node('submit') {
     /* Try to build the binaries for the current test group */
     def built = true
     def test_cases = testable['test_cases']
