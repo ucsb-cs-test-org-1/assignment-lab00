@@ -74,7 +74,7 @@ def run_individual_test_case(test_group, test_case) {
     cur_result['score'] = 0 // fail
   } finally {
     def jstr = jsonString(cur_result)
-    sh "echo '${jstr}' >> .anacapa.tmp_results_${slugify(testable['test_name'])}"
+    sh "echo '${jstr}' >> .anacapa.tmp_results_${slugify(test_group)}"
   }
 }
 
