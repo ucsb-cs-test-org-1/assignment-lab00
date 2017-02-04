@@ -13,6 +13,7 @@ def run_test_group(testable) {
       unstash 'fresh'
       sh curtest['build_command']
       stash name: curtest['test_name']
+      sh "rm .anacapa.tmp_results_${slugify(testable['test_name'])}"
     } catch (e) {
       built = false
       for (int i = 0; i < test_cases.size(); i++) {
