@@ -117,7 +117,7 @@ node {
     for (int index = 0; index < testables.size(); index++) {
       def i = index
       def curtest = testables[index]
-      unstash "${testable['test_name']}_results"
+      unstash "${curtest['test_name']}_results"
     }
     println(test_results)
     def name = "${env.JOB_NAME}_test_results"
