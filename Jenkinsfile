@@ -71,6 +71,8 @@ def run_individual_test_case(test_group, test_case) {
       }
     }
   } catch (e) {
+    println("Failed to run test case")
+    println(e)
     cur_result['score'] = 0 // fail
   } finally {
     def jstr = jsonString(cur_result)
