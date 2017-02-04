@@ -118,8 +118,10 @@ node {
       def i = index
       def curtest = testables[index]
       unstash "${slugify(curtest['test_name'])}_results"
-      def tmp_results = readFile(".anacapa.tmp_results_${slugify(curtest['test_name'])}")
-      tmp_results.eachLine {
+      def tmp_results = readFile(
+        ".anacapa.tmp_results_${slugify(curtest['test_name'])}"
+      ).split("\r?\n")
+      tmp_results.each {
         test_results['results'] << parseJSON(it)
       }
     }
