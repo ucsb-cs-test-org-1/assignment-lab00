@@ -110,10 +110,9 @@ node {
     def name = "${env.JOB_NAME}_test_results"
     name = name.replaceAll("[\\W]+", "-")
     def jstr = jsonString(test_results)
-    println(jstr)
-    sh "echo '${jstr}'"
+    sh "echo '${jstr}' > ${name}.json"
     sh 'ls -al'
-    // archiveArtifacts artifacts: "${name}.json", fingerprint: true
+    archiveArtifacts artifacts: "${name}.json", fingerprint: true
   }
 
 }
