@@ -24,7 +24,7 @@ def run_test_group(testable) {
         cur_result['score'] = 0 // fail
         cur_result['max_score'] = test_case['points']
         def jstr = jsonString(cur_result)
-        sh "echo '${jstr}' >> .anacapa.tmp_results"
+        sh "echo '${jstr}' >> .anacapa.tmp_results_${testable['test_name']}"
       }
     }
 
@@ -35,7 +35,7 @@ def run_test_group(testable) {
       }
     }
 
-    stash includes: '.anacapa.tmp_results', name: "${testable['test_name']}_results"
+    stash includes: ".anacapa.tmp_results_${testable['test_name']}", name: "${testable['test_name']}_results"
   }
 }
 
@@ -70,7 +70,7 @@ def run_individual_test_case(test_group, test_case) {
     cur_result['score'] = 0 // fail
   } finally {
     def jstr = jsonString(cur_result)
-    sh "echo '${jstr}' >> .anacapa.tmp_results"
+    sh "echo '${jstr}' >> .anacapa.tmp_results_${testable['test_name']}"
   }
 }
 
