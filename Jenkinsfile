@@ -57,10 +57,11 @@ def run_individual_test_case(test_group, test_case) {
     sh "${command} > ${output_name}"
 
     if (!test_case['expected'].equals('generate')) {
+      def ret = 0
       if (test_case['diff_source'].equals('stdout')) {
-        def ret = sh returnStatus: true, script: "diff ${output_name} ${test_case['expected']} > ${output_name}.diff"
+        ret = sh returnStatus: true, script: "diff ${output_name} ${test_case['expected']} > ${output_name}.diff"
       } else {
-        def ret = sh returnStatus: true, script: "diff ${test_case['diff_source']} ${test_case['expected']} > ${output_name}.diff"
+        ret = sh returnStatus: true, script: "diff ${test_case['diff_source']} ${test_case['expected']} > ${output_name}.diff"
       }
       sh "cat ${output_name}.diff"
       if (ret == 0) {
