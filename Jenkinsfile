@@ -88,6 +88,7 @@ def run_individual_test_case(test_group, test_case) {
 node {
   /* Checkout from Source */
   stage ('Checkout') {
+    step([$class: 'WsCleanup'])
     sh 'ls -al'
     checkout scm
     stash name: 'fresh'
@@ -143,6 +144,7 @@ node {
     sh "echo '${jstr}' > ${name}.json"
     sh 'ls -al'
     archiveArtifacts artifacts: "${name}.json", fingerprint: true
+    step([$class: 'WsCleanup'])
   }
 
 }
