@@ -9,7 +9,6 @@
 @Library('anacapa-jenkins-lib') import static edu.ucsb.cs.anacapa.pipeline.Lib.*
 
 def assignment = null
-def test_results = [:]
 
 def run_test_group(testable) {
   node('submit') {
@@ -122,10 +121,6 @@ node {
     // TODO: insert validation step here...
     //    * This allows us to guarantee that the object has certain properties
     if (assignment == null) { sh 'fail' }
-
-    test_results['assignment_name'] = assignment['assignment_name']
-    test_results['repo'] = env.JOB_NAME
-    test_results['results'] = []
   }
 
   /* Generate the build stages to run the tests */
@@ -147,6 +142,11 @@ node {
 
   stage('Report Results') {
     def testables = assignment['testables']
+    def test_results = [
+      assignment_name: assignment['assignment_name'],
+      repo: env.JOB_NAME,
+      results: []
+    ]
     for (int index = 0; index < testables.size(); index++) {
       def i = index
       def curtest = testables[index]
