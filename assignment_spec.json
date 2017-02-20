@@ -18,7 +18,7 @@
           "kind": "diff",
           "hide_expected": true,
           "diff_source": "stdout",
-          "expected": "resources/expected_outputs/hello.txt",
+          "expected": "generate",
           "timeout": 4
       }]
   }]
