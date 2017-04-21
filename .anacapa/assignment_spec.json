@@ -18,7 +18,7 @@
           "kind": "diff",
           "hide_expected": true,
           "diff_source": "stdout",
-          "expected": "generate",
+          "expected": ".anacapa/expected_outputs/hello.txt",
           "timeout": 4
       }]
   }]
