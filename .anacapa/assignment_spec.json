@@ -6,9 +6,6 @@
   "expected_files": [
     "hello.cpp"
   ],
-  "uneditables": [
-    "Jenkinsfile"
-  ],
   "testables": [{
       "test_name": "Hello World",
       "build_command": "g++ -o hello hello.cpp",
@@ -18,7 +15,7 @@
           "kind": "diff",
           "hide_expected": true,
           "diff_source": "stdout",
-          "expected": ".anacapa/expected_outputs/hello.txt",
+          "expected": "hello.txt",
           "timeout": 4
       }]
   }]
