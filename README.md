@@ -1,2 +1,2 @@
 # assignment-lab00
-an example new assignment for a class
+an example new assignment for a class 
